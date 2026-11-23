@@ -1,0 +1,1581 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<script id="jt-unified-gate">(function(){
+var H='6e95ff3e55611d24803014d9de77b401f191f198f9372577e58f9aa2e51771d3';
+var k='jt_gate';
+function getSaved(){
+  try{if(location.hostname==='127.0.0.1'||location.hostname==='localhost'||location.protocol==='file:'||location.href.indexOf('jt_ok=6e95ff3e')!==-1){localStorage.setItem(k,H);sessionStorage.setItem(k,H);return true;}}catch(e){}
+  try{if(localStorage.getItem(k)===H)return true;}catch(e){}
+  try{if(sessionStorage.getItem(k)===H)return true;}catch(e){}
+  return false;
+}
+function saveOk(){
+  try{localStorage.setItem(k,H);}catch(e){}
+  try{sessionStorage.setItem(k,H);}catch(e){}
+}
+if(getSaved()){
+  document.documentElement.setAttribute('data-jt-ok','1');
+  return;
+}
+window.__JT_LOCKED__=true;
+var st=document.createElement('style');
+st.id='jt_gate_css';
+st.textContent='html:not([data-jt-ok="1"]) body{display:none!important}';
+document.documentElement.appendChild(st);
+document.documentElement.style.visibility='hidden';
+function shaPure(ascii){
+  function rr(v,a){return(v>>>a)|(v<<(32-a));}
+  var bytes=Array.from(new TextEncoder().encode(ascii)),i,j;
+  var bitLen=bytes.length*8;
+  bytes.push(0x80);
+  while((bytes.length%64)!==56)bytes.push(0);
+  var hi=Math.floor(bitLen/4294967296),lo=bitLen>>>0;
+  bytes.push((hi>>>24)&255,(hi>>>16)&255,(hi>>>8)&255,hi&255,(lo>>>24)&255,(lo>>>16)&255,(lo>>>8)&255,lo&255);
+  var K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  var H0=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  for(i=0;i<bytes.length;i+=64){
+    var W=new Array(64);
+    for(j=0;j<16;j++)W[j]=((bytes[i+j*4]<<24)|(bytes[i+j*4+1]<<16)|(bytes[i+j*4+2]<<8)|bytes[i+j*4+3])>>>0;
+    for(j=16;j<64;j++){
+      var s0=rr(W[j-15],7)^rr(W[j-15],18)^(W[j-15]>>>3);
+      var s1=rr(W[j-2],17)^rr(W[j-2],19)^(W[j-2]>>>10);
+      W[j]=(W[j-16]+s0+W[j-7]+s1)>>>0;
+    }
+    var a=H0[0],b=H0[1],c=H0[2],d=H0[3],e=H0[4],f=H0[5],g=H0[6],h=H0[7];
+    for(j=0;j<64;j++){
+      var S1=rr(e,6)^rr(e,11)^rr(e,25),ch=(e&f)^((~e)&g),t1=(h+S1+ch+K[j]+W[j])>>>0;
+      var S0=rr(a,2)^rr(a,13)^rr(a,22),maj=(a&b)^(a&c)^(b&c),t2=(S0+maj)>>>0;
+      h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;
+    }
+    H0[0]=(H0[0]+a)>>>0;H0[1]=(H0[1]+b)>>>0;H0[2]=(H0[2]+c)>>>0;H0[3]=(H0[3]+d)>>>0;
+    H0[4]=(H0[4]+e)>>>0;H0[5]=(H0[5]+f)>>>0;H0[6]=(H0[6]+g)>>>0;H0[7]=(H0[7]+h)>>>0;
+  }
+  return H0.map(function(x){return('00000000'+x.toString(16)).slice(-8);}).join('');
+}
+async function sha(s){
+  try{
+    if(window.crypto&&crypto.subtle&&typeof TextEncoder!=='undefined'){
+      var b=new TextEncoder().encode(s);
+      var d=await crypto.subtle.digest('SHA-256',b);
+      return Array.from(new Uint8Array(d)).map(function(x){return x.toString(16).padStart(2,'0');}).join('');
+    }
+  }catch(e){}
+  return shaPure(s);
+}
+window.addEventListener('DOMContentLoaded',function(){
+  document.body.className='';
+  document.body.style.cssText='margin:0;background:#F4F1EA;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px';
+  document.body.innerHTML='<div id="jt_lock_box" style="font:20pt/1.65 Microsoft YaHei,PingFang SC,sans-serif;padding:36px 28px;color:#1B1A17;width:min(680px,100%);background:#FFFDF9;border:2px solid #1D56B8;border-radius:16px;text-align:center;box-shadow:0 10px 28px rgba(0,0,0,.08)"><div style="font-size:24pt;font-weight:800;color:#1B1A17;margin-bottom:10px">金泰三端会话总目录 · 云端同步版</div><div style="font-size:16pt;color:#5F5A4F;margin-bottom:24px">请输入金泰统一访问密码（与《全局秒搜驾驶舱》《中国历史文化图库》通用，验证一次全站免密）</div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:520px;margin:0 auto"><input id="jt_pw_box" type="password" placeholder="请输入访问密码" autocomplete="current-password" style="flex:1;min-width:210px;font:18pt Microsoft YaHei,sans-serif;padding:12px 16px;border:1.5px solid #B4AB97;border-radius:10px;background:#fff;color:#1B1A17"><button id="jt_pw_btn" type="button" style="font:bold 18pt Microsoft YaHei,sans-serif;padding:12px 28px;background:#1D56B8;color:#fff;border:none;border-radius:10px;cursor:pointer">验证进入</button></div><div id="jt_pw_err" style="font-size:15pt;color:#DC2626;min-height:28px;margin-top:12px"></div></div>';
+  document.documentElement.setAttribute('data-jt-ok','1');
+  document.documentElement.style.visibility='visible';
+  var inp=document.getElementById('jt_pw_box'),btn=document.getElementById('jt_pw_btn'),err=document.getElementById('jt_pw_err');
+  async function tryIn(){
+    var v=(inp.value||'').trim();
+    if(!v){err.textContent='请输入访问密码';return;}
+    var h=await sha(v);
+    if(h===H){saveOk();location.reload();}
+    else{err.textContent='密码不正确，请核对后重试';inp.value='';inp.focus();}
+  }
+  if(btn)btn.onclick=tryIn;
+  if(inp){
+    inp.onkeydown=function(e){if(e.key==='Enter')tryIn();};
+    setTimeout(function(){try{inp.focus();}catch(e){}},50);
+  }
+});
+})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+<title>金泰三端会话总目录</title>
+<style>
+:root {
+  --fs: 20pt;
+  --font-sans: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono: Consolas, "Cascadia Mono", monospace;
+  --bg: #F4F1EA;
+  --surface: #FFFDF9;
+  --surface-alt: #EAE4D7;
+  --surface-soft: #F7F4EC;
+  --text: #1B1A17;
+  --text-muted: #5F5A4F;
+  --border: #D5CEBF;
+  --border-strong: #B4AB97;
+  --primary: #1D56B8;
+  --primary-hover: #174494;
+  --primary-soft: #E5EEF9;
+  --agy-fg: #0F6A5F;
+  --agy-bg: #DCF5F0;
+  --codex-fg: #3730A3;
+  --codex-bg: #E5E7FF;
+  --claude-fg: #9A4809;
+  --claude-bg: #FDEBD7;
+  --warn-fg: #7D4E00;
+  --warn-bg: #FCE9C4;
+  --mem-fg: #2B6217;
+  --mem-bg: #E9F5E3;
+  --mark-bg: #FFE169;
+  --mark-fg: #1B1A17;
+  --msg-u-bg: #EBF2FC;
+  --msg-a-bg: #FAF7F0;
+  --code-bg: #EFECE3;
+  --focus-ring: 0 0 0 3px rgba(29, 86, 184, 0.35);
+  --shadow-top: 0 2px 10px rgba(27, 26, 23, 0.06);
+  --radius-card: 12px;
+  --radius-ctrl: 9px;
+}
+
+body.dark {
+  --bg: #0E1525;
+  --surface: #172135;
+  --surface-alt: #24314A;
+  --surface-soft: #1C2840;
+  --text: #F2F5FA;
+  --text-muted: #B6C2D4;
+  --border: #334361;
+  --border-strong: #4B6087;
+  --primary: #4B8BF5;
+  --primary-hover: #6DA2FA;
+  --primary-soft: rgba(75, 139, 245, 0.22);
+  --agy-fg: #4DE0C8;
+  --agy-bg: rgba(20, 184, 166, 0.2);
+  --codex-fg: #A5B4FC;
+  --codex-bg: rgba(99, 102, 241, 0.24);
+  --claude-fg: #FDBA74;
+  --claude-bg: rgba(234, 88, 12, 0.24);
+  --warn-fg: #FCD34D;
+  --warn-bg: rgba(217, 119, 6, 0.24);
+  --mem-fg: #86EFAC;
+  --mem-bg: rgba(22, 163, 74, 0.22);
+  --mark-bg: #FACC15;
+  --mark-fg: #0E1525;
+  --msg-u-bg: #1E3152;
+  --msg-a-bg: #1B253A;
+  --code-bg: #101829;
+  --focus-ring: 0 0 0 3px rgba(109, 162, 250, 0.45);
+  --shadow-top: 0 3px 14px rgba(0, 0, 0, 0.45);
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  box-shadow: var(--shadow-top);
+}
+.top-in {
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 10px 24px 10px;
+}
+
+.r1 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+.r1 h1 {
+  font-size: 1.24em;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.r1 .stat {
+  color: var(--text-muted);
+  font-size: 0.72em;
+}
+.r1 .sp { flex: 1; }
+.top-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.r2 {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 7px;
+  align-items: center;
+}
+.search-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+#q {
+  width: 100%;
+  font-size: 0.96em;
+  padding: 8px 46px 8px 16px;
+  border: 2px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color 0.14s ease;
+}
+#q:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
+}
+#q-clear {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  border-radius: 999px;
+  width: 1.55em;
+  height: 1.55em;
+  cursor: pointer;
+  font-size: 0.78em;
+  line-height: 1;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+#q-clear.show { display: inline-flex; }
+
+.r3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  align-items: center;
+  font-size: 0.74em;
+}
+.seg {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.seg .lb {
+  color: var(--text-muted);
+  margin-right: 2px;
+  font-weight: 600;
+}
+
+.seg button, .btn, .tbtn {
+  padding: 3px 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  border-radius: var(--radius-ctrl);
+  cursor: pointer;
+  color: var(--text);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  line-height: 1.45;
+  transition: border-color 0.12s ease, background-color 0.12s ease, color 0.12s ease;
+}
+.tbtn { font-size: 0.7em; padding: 3px 10px; }
+.seg button.on, .btn.pri {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+.btn:hover, .seg button:hover, .tbtn:hover {
+  border-color: var(--primary);
+}
+.btn.pri:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+.btn.subtle {
+  background: var(--surface-soft);
+}
+select {
+  padding: 3px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-ctrl);
+  background: var(--surface);
+  color: var(--text);
+  max-width: 18em;
+}
+.chk {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  color: var(--text-muted);
+  user-select: none;
+}
+.chk input {
+  width: 1.05em;
+  height: 1.05em;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+main {
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 10px 24px 80px;
+}
+
+.help {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  padding: 4px 18px;
+  margin: 10px 0 14px;
+  font-size: 0.74em;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.help summary {
+  cursor: pointer;
+  padding: 6px 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+.help li { margin: 4px 0; }
+
+.sect { margin: 16px 0 10px; }
+.sect > h2 {
+  font-size: 1.0em;
+  margin: 0;
+  padding: 8px 14px;
+  background: var(--surface-alt);
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.sect > h2 .cnt {
+  color: var(--text-muted);
+  font-size: 0.76em;
+  font-weight: normal;
+}
+.sect[data-g] > h2::before { content: "▾"; color: var(--text-muted); }
+.sect.fold[data-g] > h2::before { content: "▸"; }
+.sect > h2.plain { cursor: default; }
+.sect > h2.plain::before { content: none; }
+.sect.fold > .list { display: none; }
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  border-left: 7px solid var(--border-strong);
+  padding: 10px 18px;
+  margin: 10px 0;
+}
+.card.p-agy { border-left-color: var(--agy-fg); }
+.card.p-codex { border-left-color: var(--codex-fg); }
+.card.p-claude { border-left-color: var(--claude-fg); }
+.card.hit { border-left-color: var(--primary); }
+.card.compact { padding: 8px 16px; margin: 8px 0; }
+
+.card .h {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+}
+.card .dt {
+  color: var(--text-muted);
+  font-size: 0.76em;
+  white-space: nowrap;
+}
+.card .tt {
+  font-weight: 700;
+  font-size: 1.0em;
+}
+
+.chip {
+  font-size: 0.65em;
+  padding: 1px 9px;
+  border-radius: 20px;
+  background: var(--surface-alt);
+  color: var(--text-muted);
+  white-space: nowrap;
+  font-weight: 600;
+}
+.chip.agy { background: var(--agy-bg); color: var(--agy-fg); }
+.chip.codex { background: var(--codex-bg); color: var(--codex-fg); }
+.chip.claude { background: var(--claude-bg); color: var(--claude-fg); }
+.chip.g { background: var(--primary-soft); color: var(--primary); }
+.chip.warn { background: var(--warn-bg); color: var(--warn-fg); }
+
+.clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+}
+.clamp.open { display: block; }
+
+.ln { margin: 4px 0; font-size: 0.84em; }
+.ln b { color: var(--text-muted); font-weight: 700; margin-right: 4px; }
+.ln.old { color: var(--text-muted); font-size: 0.74em; }
+.mem { font-size: 0.76em; color: var(--mem-fg); background: var(--mem-bg); padding: 2px 9px; border-radius: 6px; margin: 3px 0; display: inline-block; }
+
+.fl {
+  margin: 6px 0 2px;
+  font-size: 0.78em;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.fl .f {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.fl .fn { font-weight: 700; word-break: break-all; }
+.fl .fp { color: var(--text-muted); font-size: 0.84em; word-break: break-all; }
+.fl .btn { font-size: 0.82em; padding: 1px 9px; }
+
+.acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 9px;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 0.76em;
+}
+.acts .meta { color: var(--text-muted); font-size: 0.92em; }
+
+.snip {
+  font-size: 0.8em;
+  margin: 4px 0;
+  padding: 5px 12px;
+  background: var(--surface-soft);
+  border-radius: 8px;
+}
+.snip .who { color: var(--text-muted); font-weight: 700; margin-right: 6px; }
+mark {
+  background: var(--mark-bg);
+  color: var(--mark-fg);
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+.conv {
+  margin-top: 10px;
+  border-top: 2px dashed var(--border);
+  padding-top: 8px;
+}
+.conv-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.76em;
+}
+.msg {
+  margin: 10px 0;
+  padding: 8px 16px;
+  border-radius: 10px;
+}
+.msg.u { background: var(--msg-u-bg); border-left: 6px solid var(--primary); }
+.msg.a { background: var(--msg-a-bg); border-left: 6px solid var(--border-strong); }
+.msg .who { font-weight: 700; font-size: 0.76em; color: var(--text-muted); }
+.msg .who .ts { font-weight: normal; margin-left: 8px; }
+
+.md { font-size: 0.9em; }
+.md p { margin: 0.35em 0; }
+.md ul, .md ol { margin: 0.3em 0; padding-left: 1.5em; }
+.md pre {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  font-size: 0.85em;
+  font-family: var(--font-mono);
+}
+.md code {
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 0 4px;
+  border-radius: 4px;
+  font-size: 0.88em;
+}
+.md pre code { background: none; padding: 0; }
+.md table { border-collapse: collapse; margin: 0.5em 0; display: block; overflow-x: auto; font-size: 0.9em; }
+.md th, .md td { border: 1px solid var(--border-strong); padding: 4px 10px; vertical-align: top; }
+.md th { background: var(--surface-alt); }
+.md h3, .md h4, .md h5, .md h6 { margin: 0.6em 0 0.2em; font-size: 1.05em; }
+.md blockquote { margin: 0.4em 0; padding: 2px 12px; border-left: 4px solid var(--border-strong); color: var(--text-muted); }
+
+.more { text-align: center; margin: 12px 0; }
+.empty { text-align: center; color: var(--text-muted); margin: 54px 0; }
+
+.dayrow {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 6px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 8px 16px;
+  margin: 8px 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 16px;
+  align-items: center;
+}
+.dayrow.p-agy { border-left-color: var(--agy-fg); }
+.dayrow.p-codex { border-left-color: var(--codex-fg); }
+.dayrow.p-claude { border-left-color: var(--claude-fg); }
+.dayrow .tt { font-weight: 700; }
+.dayrow .said { grid-column: 1 / 2; font-size: 0.8em; color: var(--text-muted); }
+.dayrow .ops { grid-row: 1 / 3; grid-column: 2; display: flex; gap: 8px; font-size: 0.76em; flex-wrap: wrap; }
+
+#upd {
+  background: var(--warn-bg);
+  color: var(--warn-fg);
+  border: 2px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 6px 16px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 0.82em;
+}
+#toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1B1A17;
+  color: #FFFFFF;
+  padding: 8px 22px;
+  border-radius: 10px;
+  font-size: 0.78em;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+  z-index: 50;
+}
+#toast.show { opacity: 0.94; }
+
+@media (max-width: 780px) {
+  .top-in, main { padding-left: 12px; padding-right: 12px; }
+  .r1 h1 { font-size: 1.15em; }
+  .seg { max-width: 100%; }
+  select { max-width: min(18em, calc(100vw - 96px)); }
+  .dayrow { grid-template-columns: 1fr; }
+  .dayrow .ops { grid-row: auto; grid-column: 1; }
+}
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .r3 { font-size: 0.92em; gap: 6px 8px; }
+  select { width: 100%; max-width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-in">
+    <div id="upd" hidden title="点一下重新载入页面"></div>
+    <div class="r1">
+      <h1>会话总目录</h1>
+      <span class="stat" id="stat">正在读取三端索引…</span>
+      <span class="sp"></span>
+      <span class="top-tools">
+        <a class="tbtn" id="cockpit-link" href="http://127.0.0.1:18899/" target="_blank" rel="noopener" title="打开全机文件与图库毫秒秒搜驾驶舱">全局秒搜驾驶舱</a>
+        <button class="tbtn" id="fs-dn" type="button" title="缩小字号">字号小</button>
+        <button class="tbtn" id="fs-up" type="button" title="放大字号">字号大</button>
+        <button class="tbtn" id="theme-btn" type="button" title="切换浅色/深色护眼模式">深色护眼</button>
+      </span>
+    </div>
+    <div class="r2">
+      <div class="search-wrap">
+        <input id="q" type="search" autocomplete="off" placeholder="搜索三端全部会话：多个词空格隔开，如「河传 协议」「唐魂」「常青 报价」「PDF」（按 / 聚焦）">
+        <button id="q-clear" type="button" aria-label="清空搜索">✕</button>
+      </div>
+    </div>
+    <div class="r3">
+      <span class="seg" id="plats"><span class="lb">平台：</span><button data-p="all">全部</button><button data-p="agy">Antigravity</button><button data-p="codex">Codex</button><button data-p="claude">Claude</button></span>
+      <span class="seg" id="views"><span class="lb">看法：</span><button data-v="group">按文件夹</button><button data-v="recent">最新时间</button><button data-v="day">按日期</button><button data-v="files">交付文件</button></span>
+      <span class="seg" id="ranges"><span class="lb">时间：</span><button data-r="0">全部</button><button data-r="1">今天</button><button data-r="3">近3天</button><button data-r="7">近7天</button><button data-r="30">近30天</button></span>
+      <span class="seg"><span class="lb">文件夹：</span><select id="gsel" aria-label="按文件夹或项目筛选"></select></span>
+      <label class="chk" title="默认隐藏每日后台自动运行的定时任务，取消勾选即可全部显示"><input type="checkbox" id="hide-sched">隐藏定时任务</label>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+  <noscript><div class="empty">请允许页面运行本地 JavaScript，或双击目录中的「更新并打开会话总目录.cmd」查看。</div></noscript>
+  <div class="empty">正在加载三端会话数据……如果长时间停在这里，请运行「生成会话总目录.py」重建 data/unified_catalog.js。</div>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script charset="utf-8" src="data/unified_catalog.js"></script>
+<script>
+(function () {
+  "use strict";
+  if (window.__JT_LOCKED__) return;
+  var main = document.getElementById("main");
+  var IS_CLOUD_HOST = /\.github\.io$/i.test(window.location.hostname || "");
+  var JT_GATE_HASH = "6e95ff3e55611d24803014d9de77b401f191f198f9372577e58f9aa2e51771d3";
+  var GATE_KEY_BYTES = new Uint8Array(32);
+  for (var ki = 0; ki < 32; ki++) {
+    GATE_KEY_BYTES[ki] = parseInt(JT_GATE_HASH.slice(ki * 2, ki * 2 + 2), 16);
+  }
+
+  function decodeEncPayload(b64) {
+    var bin = atob(b64);
+    var out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) {
+      out[i] = bin.charCodeAt(i) ^ GATE_KEY_BYTES[i & 31] ^ ((i * 31) & 0xff);
+    }
+    if (typeof DecompressionStream !== "undefined") {
+      var ds = new DecompressionStream("gzip");
+      var stream = new Blob([out]).stream().pipeThrough(ds);
+      return new Response(stream).text().then(function (txt) { return JSON.parse(txt); });
+    }
+    return Promise.resolve(JSON.parse(new TextDecoder("utf-8").decode(out)));
+  }
+
+  var SHARDS = {};
+  var SHARD_ENC_WAIT = {};
+  var SHARD_PENDING = {};
+  window.__CATALOG_SHARD__ = function (shardId, map) {
+    SHARDS[shardId] = map || {};
+  };
+  window.__CATALOG_SHARD_ENC__ = function (shardId, b64) {
+    SHARD_ENC_WAIT[shardId] = decodeEncPayload(b64).then(function (map) {
+      SHARDS[shardId] = map || {};
+      delete SHARD_ENC_WAIT[shardId];
+      return SHARDS[shardId];
+    }).catch(function () {
+      SHARDS[shardId] = {};
+      delete SHARD_ENC_WAIT[shardId];
+      return {};
+    });
+  };
+
+  function startApp(C) {
+    if (!C) {
+      main.innerHTML = '<div class="empty">未找到 data/unified_catalog.js，请运行「生成会话总目录.py」或双击「更新并打开会话总目录.cmd」。</div>';
+      return;
+    }
+
+  var cockpitLink = document.getElementById("cockpit-link");
+  if (IS_CLOUD_HOST && cockpitLink) {
+    cockpitLink.href = "https://aikingtai-ctrl.github.io/jintai-global-cockpit/";
+  }
+
+  var S = C.sessions || [];
+  var ALL_GROUPS = C.groups || [];
+  var G = {};
+  var GORDER = ALL_GROUPS.map(function (g) { G[g.id] = g.name; return g.id; });
+  var PLAT_LABEL = { agy: "Antigravity", codex: "Codex", claude: "Claude" };
+  var WEEK = "日一二三四五六";
+  var COCKPIT_API = "http://127.0.0.1:18899";
+
+  // ---------- 分片按需加载器（file:/// 零 CORS / 云端自动解密，秒级载入）
+  function loadShard(shardId, cb) {
+    if (!shardId) { cb({}); return; }
+    if (SHARDS[shardId]) { cb(SHARDS[shardId]); return; }
+    if (SHARD_PENDING[shardId]) { SHARD_PENDING[shardId].push(cb); return; }
+    SHARD_PENDING[shardId] = [cb];
+    var sc = document.createElement("script");
+    sc.charset = "utf-8";
+    sc.src = "data/shards/" + encodeURIComponent(shardId) + ".js?v=" + C.generated;
+    function finish() {
+      var cbs = SHARD_PENDING[shardId] || [];
+      delete SHARD_PENDING[shardId];
+      var data = SHARDS[shardId] || {};
+      cbs.forEach(function (fn) { fn(data); });
+    }
+    sc.onload = sc.onerror = function () {
+      sc.remove();
+      if (SHARD_ENC_WAIT[shardId]) {
+        SHARD_ENC_WAIT[shardId].then(finish, finish);
+      } else {
+        finish();
+      }
+    };
+    document.head.appendChild(sc);
+  }
+  function getFullMsgs(s, cb) {
+    if (s._msgs) { cb(s._msgs); return; }
+    loadShard(s.sh, function (map) {
+      s._msgs = map[s.id] || [];
+      cb(s._msgs);
+    });
+  }
+
+  // ---------- 小工具
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function sh(sec) { return new Date(sec * 1000 + 8 * 3600000); }
+  function dayKey(sec) { return sh(sec).toISOString().slice(0, 10); }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function fmtDay(key) {
+    var d = new Date(key + "T00:00:00Z");
+    return (d.getUTCMonth() + 1) + "月" + d.getUTCDate() + "日 周" + WEEK[d.getUTCDay()];
+  }
+  function fmtShort(sec) {
+    if (!sec) return "";
+    var d = sh(sec);
+    return pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()) + " " + pad(d.getUTCHours()) + ":" + pad(d.getUTCMinutes());
+  }
+  var TODAY = dayKey(Date.now() / 1000);
+  function daysAgo(n) { return dayKey(Date.now() / 1000 - n * 86400); }
+  function rel(key) { if (key === TODAY) return "今天"; if (key === daysAgo(1)) return "昨天"; return fmtDay(key); }
+  function baseName(p) { var i = p.lastIndexOf("\\"); return i >= 0 ? p.slice(i + 1) : p; }
+  function dirName(p) { var i = p.lastIndexOf("\\"); return i >= 0 ? p.slice(0, i) : ""; }
+  function fileUrl(p) {
+    return "file:///" + p.split("\\").map(encodeURIComponent).join("/").replace(/^([A-Za-z])%3A/, "$1:");
+  }
+  function toast(t) {
+    var el = document.getElementById("toast");
+    el.textContent = t;
+    el.classList.add("show");
+    clearTimeout(toast.h);
+    toast.h = setTimeout(function () { el.classList.remove("show"); }, 1800);
+  }
+  function copy(t, label) {
+    function fb() {
+      var ta = document.createElement("textarea");
+      ta.value = t;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); toast(label || "已复制"); }
+      catch (e) { toast("复制失败，请手动选中复制"); }
+      ta.remove();
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(t).then(function () { toast(label || "已复制"); }, fb);
+    } else {
+      fb();
+    }
+  }
+  function openViaCockpitOrFallback(payload, fallbackFn) {
+    if (IS_CLOUD_HOST) {
+      fallbackFn();
+      return;
+    }
+    fetch(COCKPIT_API + "/api/open", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    }).then(function (res) { return res.json(); }).then(function (data) {
+      if (data && data.ok) {
+        if (payload.mode === "reveal") toast("已定位并选中文件");
+        else if (payload.mode === "obsidian") toast("已在 Obsidian 打开归档");
+        else toast("已打开");
+      } else {
+        fallbackFn();
+      }
+    }).catch(fallbackFn);
+  }
+
+  var VIEWABLE = /\.(html?|pdf|png|jpe?g|gif|webp|svg|mp4|webm|mp3|wav|txt|md|csv|json)$/i;
+  function fileTag(p, isDir) {
+    if (isDir) return "目录";
+    var m = p.match(/\.([A-Za-z0-9]+)$/);
+    return m ? m[1].toUpperCase() : "文件";
+  }
+
+  // ---------- 预处理索引
+  var BY_ID = {};
+  S.forEach(function (s) {
+    BY_ID[s.id] = s;
+    s.tl = (s.t + "\n" + (s.pt || []).join("\n")).toLowerCase();
+    s.hay = (s.qs || s.tl).toLowerCase();
+    s.dset = {};
+    (s.d || []).forEach(function (k) { s.dset[k] = 1; });
+  });
+
+  // ---------- 持久化状态
+  var fs = 20;
+  var dark = false;
+  var st = { p: "all", v: "group", r: 0, g: "", q: "", hideSched: true };
+  var folded = {};
+  var groupLimit = {};
+  var listLimit = 50;
+
+  function setFs(v) {
+    fs = Math.max(14, Math.min(34, v));
+    document.documentElement.style.setProperty("--fs", fs + "pt");
+  }
+  function setDark(v) {
+    dark = !!v;
+    document.body.classList.toggle("dark", dark);
+    document.getElementById("theme-btn").textContent = dark ? "浅色高对比" : "深色护眼";
+  }
+  function save() {
+    try {
+      localStorage.setItem("ccd-catalog-v2", JSON.stringify({
+        p: st.p, v: st.v, r: st.r, fs: fs, dark: dark, hideSched: st.hideSched
+      }));
+      localStorage.setItem("ccd-catalog-fold-v2", JSON.stringify(folded));
+    } catch (e) {}
+  }
+  try {
+    var sv = JSON.parse(localStorage.getItem("ccd-catalog-v2") || "{}");
+    if (sv.p) st.p = sv.p;
+    if (sv.v) st.v = sv.v;
+    if (sv.r != null) st.r = sv.r;
+    if (sv.fs) setFs(sv.fs);
+    if (sv.dark) setDark(sv.dark);
+    if (sv.hideSched != null) st.hideSched = !!sv.hideSched;
+  } catch (e) {}
+  try { folded = JSON.parse(localStorage.getItem("ccd-catalog-fold-v2") || "{}"); } catch (e) {}
+
+  function inRange(s) {
+    if (!st.r) return true;
+    var cut = daysAgo(st.r - 1);
+    for (var i = s.d.length - 1; i >= 0; i--) if (s.d[i] >= cut) return true;
+    return dayKey(s.a) >= cut;
+  }
+  function baseFiltered(skipPlat) {
+    return S.filter(function (s) {
+      if (st.hideSched && s.sch) return false;
+      if (!skipPlat && st.p !== "all" && s.p !== st.p) return false;
+      if (!inRange(s)) return false;
+      if (!skipPlat && st.g && s.g !== st.g) return false;
+      return true;
+    });
+  }
+
+  // ---------- 卡片渲染
+  function chips(s) {
+    var h = '<span class="chip ' + esc(s.p) + '">' + esc(PLAT_LABEL[s.p] || s.p) + "</span>";
+    if (s.star) h += '<span class="chip warn">置顶</span>';
+    h += '<span class="chip g">' + esc(G[s.g] || "未分组") + "</span>";
+    if (s.st === "cleaned") h += '<span class="chip warn">正文已归档</span>';
+    if (s.st === "none") h += '<span class="chip warn">仅剩标题</span>';
+    if (s.arc) h += '<span class="chip">已归档</span>';
+    return h;
+  }
+
+  function primaryAction(s) {
+    if (s.p === "claude") {
+      if (s.cur) {
+        return '<a class="btn subtle" href="claude://claude.ai/epitaxy/' + esc(s.rid) + '" title="在 Claude 桌面端打开此会话">在 Claude 打开</a>';
+      }
+      return "";
+    }
+    if (s.p === "codex") {
+      return '<button type="button" class="btn subtle" data-copy="codex resume ' + esc(s.rid) + '" title="复制终端续聊命令">复制续聊命令</button>';
+    }
+    return "";
+  }
+
+  function extraPlatformBtns(s) {
+    var h = primaryAction(s);
+    if (s.obs) {
+      h += '<button type="button" class="btn subtle" data-obs="' + esc(s.id) + '" title="在 Obsidian 打开脱敏归档">Obsidian 归档</button>';
+    }
+    if (s.cwd) {
+      h += '<button type="button" class="btn subtle" data-cwd="' + esc(s.id) + '" title="打开所在工作目录：' + esc(s.cwd) + '">工作目录</button>';
+    }
+    return h;
+  }
+
+  function fileRows(s, limit) {
+    if (!s.f || !s.f.length) return "";
+    var h = '<div class="fl">';
+    s.f.slice(0, limit).forEach(function (f) {
+      var fp = f[0], isDir = f[1];
+      h += '<div class="f">' +
+        '<span class="chip">' + esc(fileTag(fp, isDir)) + '</span>' +
+        '<span class="fn">' + esc(baseName(fp) || fp) + '</span>' +
+        '<span class="fp">' + esc(dirName(fp)) + '</span>' +
+        '<button type="button" class="btn" data-openpath="' + esc(fp) + '" data-isdir="' + (isDir ? 1 : 0) + '">打开</button>' +
+        (!isDir ? '<button type="button" class="btn" data-reveal="' + esc(fp) + '">定位文件夹</button>' : "") +
+        '<button type="button" class="btn" data-copy="' + esc(fp) + '">复制路径</button>' +
+        "</div>";
+    });
+    if (s.f.length > limit) {
+      h += '<div class="f"><button type="button" class="btn" data-morefiles="' + esc(s.id) + '">还有 ' + (s.f.length - limit) + " 个文件，全部显示</button></div>";
+    }
+    return h + "</div>";
+  }
+
+  function card(s, terms, compact) {
+    var h = '<div class="card p-' + esc(s.p) + (terms ? " hit" : "") + (compact ? " compact" : "") + '" data-id="' + esc(s.id) + '">';
+    h += '<div class="h"><span class="dt">' + esc(fmtShort(s.a || s.c)) + '</span><span class="tt">' + hl(s.t, terms) + "</span>" + chips(s) + "</div>";
+    if (s.pt && s.pt.length && terms) {
+      var hitOld = s.pt.filter(function (t) { return terms.some(function (q) { return t.toLowerCase().indexOf(q) >= 0; }); });
+      if (hitOld.length) h += '<div class="ln old">曾用标题：' + hl(hitOld.join(" / "), terms) + "</div>";
+    }
+    var cl = compact ? " clamp" : "";
+    if (terms) {
+      h += snippets(s, terms);
+    } else {
+      if (s.fr) h += '<div class="ln' + cl + '" title="点一下展开"><b>你：</b>' + esc(s.fr) + "</div>";
+      if (s.lr) h += '<div class="ln' + cl + '" title="点一下展开"><b>结果：</b>' + esc(s.lr) + "</div>";
+      if (s.mem && s.mem.length) {
+        s.mem.slice(compact ? -1 : -2).forEach(function (m) {
+          h += '<div class="mem' + cl + '" title="点一下展开">记忆：' + esc(m) + "</div>";
+        });
+      }
+    }
+    if (!compact) h += fileRows(s, 3);
+    h += '<div class="acts">' +
+      '<button type="button" class="btn pri" data-conv="' + esc(s.id) + '">看全文</button>' +
+      extraPlatformBtns(s) +
+      (compact && s.f.length ? '<button type="button" class="btn" data-files="1">交付文件 ' + s.f.length + " 个</button>" : "") +
+      '<button type="button" class="btn" data-copy="' + esc(s.t) + '">复制标题</button>' +
+      '<span class="meta">提问 ' + s.n[0] + " · 回复 " + s.n[1] + " · 创建 " + esc(fmtShort(s.c)) + "</span>" +
+      "</div>";
+    if (compact && s.f.length) h += '<div class="fbox" hidden></div>';
+    return h + '<div class="conv" hidden></div></div>';
+  }
+
+  // ---------- 搜索与高亮
+  function hl(text, terms) {
+    var t = esc(text);
+    if (!terms || !terms.length) return t;
+    terms.forEach(function (q) {
+      var eq = esc(q).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      if (eq) t = t.replace(new RegExp("(" + eq + ")(?![^<]*>)", "gi"), "<mark>$1</mark>");
+    });
+    return t;
+  }
+
+  function snippets(s, terms) {
+    var out = [];
+    var msgs = s._msgs;
+    if (msgs && msgs.length) {
+      var q0 = terms[0];
+      var order = msgs.filter(function (x) { return x[0] === 0; }).concat(msgs.filter(function (x) { return x[0] === 1; }));
+      for (var i = 0; i < order.length && out.length < 3; i++) {
+        var x = order[i];
+        if (x[2].toLowerCase().indexOf(q0) < 0) continue;
+        var txt = x[2].replace(/```[^\n]*/g, " ").replace(/\*\*|__/g, "").replace(/\s+/g, " ");
+        var k = txt.toLowerCase().indexOf(q0);
+        if (k < 0) continue;
+        var a = Math.max(0, k - 45), b = Math.min(txt.length, k + q0.length + 95);
+        var piece = (a > 0 ? "…" : "") + txt.slice(a, b) + (b < txt.length ? "…" : "");
+        out.push('<div class="snip"><span class="who">' + (x[0] === 0 ? "你" : PLAT_LABEL[s.p]) + "</span>" + hl(piece, terms) + "</div>");
+      }
+    }
+    if (!out.length) {
+      var hay = s.qs || "";
+      for (var j = 0; j < terms.length && out.length < 2; j++) {
+        var idx = hay.toLowerCase().indexOf(terms[j]);
+        if (idx >= 0) {
+          var sa = Math.max(0, idx - 45), sb = Math.min(hay.length, idx + terms[j].length + 100);
+          var seg = (sa > 0 ? "…" : "") + hay.slice(sa, sb) + (sb < hay.length ? "…" : "");
+          out.push('<div class="snip"><span class="who">命中上下文</span>' + hl(seg, terms) + "</div>");
+        }
+      }
+    }
+    if (!out.length) {
+      if (s.fr) out.push('<div class="ln"><b>你：</b>' + hl(s.fr, terms) + "</div>");
+      if (s.lr) out.push('<div class="ln"><b>结果：</b>' + hl(s.lr, terms) + "</div>");
+    }
+    return out.join("");
+  }
+
+  function parseQuery(raw) {
+    // 支持空格 AND，以及 | 并集 OR
+    var branches = raw.toLowerCase().split("|").map(function (b) {
+      return b.trim().split(/\s+/).filter(Boolean);
+    }).filter(function (b) { return b.length > 0; });
+    var flat = [];
+    branches.forEach(function (b) { b.forEach(function (t) { if (flat.indexOf(t) < 0) flat.push(t); }); });
+    return { branches: branches, flat: flat };
+  }
+
+  function search(list, parsed, deepShards) {
+    var res = [];
+    list.forEach(function (s) {
+      var fullBody = "";
+      if (deepShards && s._msgs && s._msgs.length) {
+        fullBody = s._msgs.map(function (m) { return m[2]; }).join("\n").toLowerCase();
+      }
+      var sc = 0;
+      var matched = false;
+      for (var b = 0; b < parsed.branches.length; b++) {
+        var terms = parsed.branches[b];
+        var ok = true;
+        var bScore = 0;
+        for (var i = 0; i < terms.length; i++) {
+          var q = terms[i];
+          var inHay = s.hay.indexOf(q) >= 0;
+          var inFull = deepShards && fullBody.indexOf(q) >= 0;
+          if (!inHay && !inFull) { ok = false; break; }
+          if (s.tl.indexOf(q) >= 0) bScore += 100;
+          if ((s.fr || "").toLowerCase().indexOf(q) >= 0) bScore += 25;
+          bScore += inHay ? 5 : 2;
+        }
+        if (ok) { matched = true; if (bScore > sc) sc = bScore; }
+      }
+      if (matched) res.push([sc, s]);
+    });
+    res.sort(function (x, y) { return y[0] - x[0] || y[1].a - x[1].a; });
+    return res.map(function (x) { return x[1]; });
+  }
+
+  // ---------- 视图渲染
+  var GROUP_PAGE = 25;
+  var LIST_PAGE = 50;
+  var deepSearchDone = false;
+  var deepSearchLoading = false;
+
+  function triggerDeepSearch() {
+    if (deepSearchDone || deepSearchLoading) return;
+    deepSearchLoading = true;
+    var shardIds = [];
+    S.forEach(function (s) { if (s.sh && !SHARDS[s.sh] && shardIds.indexOf(s.sh) < 0) shardIds.push(s.sh); });
+    if (!shardIds.length) {
+      S.forEach(function (s) { if (!s._msgs && SHARDS[s.sh]) s._msgs = SHARDS[s.sh][s.id] || []; });
+      deepSearchDone = true;
+      deepSearchLoading = false;
+      return;
+    }
+    var idx = 0;
+    function pump() {
+      var batch = shardIds.slice(idx, idx + 3);
+      idx += 3;
+      if (!batch.length) {
+        S.forEach(function (s) { if (!s._msgs && SHARDS[s.sh]) s._msgs = SHARDS[s.sh][s.id] || []; });
+        deepSearchDone = true;
+        deepSearchLoading = false;
+        if (st.q.trim()) render();
+        return;
+      }
+      var left = batch.length;
+      batch.forEach(function (sid) {
+        loadShard(sid, function () {
+          left--;
+          if (left <= 0) pump();
+        });
+      });
+    }
+    pump();
+  }
+
+  function viewSearch(list) {
+    if (!deepSearchDone && !deepSearchLoading) triggerDeepSearch();
+    var parsed = parseQuery(st.q);
+    var res = search(list, parsed, deepSearchDone);
+    var shown = res.slice(0, listLimit);
+    var deepTag = deepSearchDone
+      ? '<span class="cnt" id="deep-search-state" style="margin-left:auto;">已覆盖全部完整正文</span>'
+      : '<span class="cnt" id="deep-search-state" style="margin-left:auto;">正在后台扩展全部完整正文…</span>';
+    var h = '<div class="sect"><h2 class="plain">搜索「' + esc(st.q) + '」<span class="cnt">找到 ' + res.length + " 个会话</span>" + deepTag + "</h2></div>";
+    if (!res.length) return h + '<div class="empty">' + (deepSearchDone ? "没有找到匹配的会话，请换个词或放宽上方「平台 / 时间 / 文件夹」筛选。" : "正在后台检索全部分片正文…") + "</div>";
+    h += shown.map(function (s) { return card(s, parsed.flat, false); }).join("");
+    if (res.length > listLimit) {
+      h += '<div class="more"><button type="button" class="btn" data-morelist="1">显示更多（还有 ' + (res.length - listLimit) + " 个会话）</button></div>";
+    }
+    return h;
+  }
+
+  function viewRecent(list) {
+    var sorted = list.slice().sort(function (x, y) { return (y.star - x.star) || (y.a - x.a); });
+    var shown = sorted.slice(0, listLimit);
+    var h = '<div class="sect"><h2 class="plain">最新会话流<span class="cnt">按最近活跃倒序 · 共 ' + sorted.length + " 个会话</span></h2></div>";
+    if (!sorted.length) return h + '<div class="empty">当前筛选条件里没有会话。</div>';
+    h += shown.map(function (s) { return card(s, null, false); }).join("");
+    if (sorted.length > listLimit) {
+      h += '<div class="more"><button type="button" class="btn" data-morelist="1">展开更多（还有 ' + (sorted.length - listLimit) + " 个会话）</button></div>";
+    }
+    return h;
+  }
+
+  function section(gid, name, arr, autoFoldOld) {
+    var isFold;
+    if (folded[gid] !== undefined) isFold = !!folded[gid];
+    else isFold = !!autoFoldOld;
+    var lim = groupLimit[gid] || GROUP_PAGE;
+    var slice = arr.slice(0, lim);
+    var h = '<div class="sect' + (isFold ? " fold" : "") + '" data-g="' + esc(gid) + '"><h2>' + esc(name) + '<span class="cnt">' + arr.length + ' 个会话</span></h2><div class="list">';
+    h += slice.map(function (s) { return card(s, null, true); }).join("");
+    if (arr.length > lim) {
+      h += '<div class="more"><button type="button" class="btn" data-moregrp="' + esc(gid) + '">展开本组其余 ' + (arr.length - lim) + " 个会话</button></div>";
+    }
+    return h + "</div></div>";
+  }
+
+  function viewGroup(list) {
+    var by = {};
+    list.forEach(function (s) { (by[s.g] = by[s.g] || []).push(s); });
+    var h = "";
+    var pins = list.filter(function (s) { return s.star; });
+    if (pins.length) h += section("__pin__", "置顶会话", pins, false);
+    var openCount = 0;
+    GORDER.forEach(function (gid) {
+      if (!by[gid]) return;
+      var arr = by[gid];
+      // 若多平台全览下分组很多，默认展开前 6 个最活跃分组，其余自动折叠，点击即展开
+      var autoFold = (st.p === "all" && !st.g && openCount >= 6);
+      if (gid === "__sched__") autoFold = true;
+      openCount++;
+      h += section(gid, G[gid], arr, autoFold);
+    });
+    return h || '<div class="empty">当前筛选条件里没有会话。</div>';
+  }
+
+  function lastOn(s, k) { return s.a || s.c; }
+  function viewDay(list) {
+    var by = {}, keys = [];
+    var cut = st.r ? daysAgo(st.r - 1) : "";
+    list.forEach(function (s) {
+      s.d.forEach(function (k) {
+        if (k < cut) return;
+        if (!by[k]) { by[k] = []; keys.push(k); }
+        by[k].push(s);
+      });
+    });
+    keys.sort().reverse();
+    if (!keys.length) return '<div class="empty">这个时间范围里没有会话。</div>';
+    var maxDays = st.r ? keys.length : 30;
+    var showKeys = keys.slice(0, maxDays);
+    var h = "";
+    showKeys.forEach(function (k) {
+      var arr = by[k].sort(function (x, y) { return lastOn(y, k) - lastOn(x, k); });
+      h += '<div class="sect day"><h2 class="plain">' + esc(rel(k)) + (rel(k) !== fmtDay(k) ? "（" + esc(fmtDay(k)) + "）" : "") + '<span class="cnt">' + arr.length + " 个会话</span></h2>";
+      arr.forEach(function (s) {
+        h += '<div class="dayrow p-' + esc(s.p) + '" data-id="' + esc(s.id) + '">' +
+          '<div><span class="tt">' + esc(s.t) + "</span> " + chips(s) + "</div>" +
+          '<div class="ops">' + primaryAction(s) + '<button type="button" class="btn pri" data-conv="' + esc(s.id) + '" data-day="' + k + '">看这天的对话</button></div>' +
+          (s.fr ? '<div class="said">首个提问：' + esc(s.fr) + "</div>" : "") +
+          '<div class="conv" hidden style="grid-column:1/-1"></div></div>';
+      });
+      h += "</div>";
+    });
+    if (keys.length > showKeys.length) {
+      h += '<div class="empty" style="margin:24px 0">默认显示最近 30 个活跃日，使用上方搜索框或点选具体月份可直达更早记录。</div>';
+    }
+    return h;
+  }
+
+  var FILE_KIND = [
+    ["全部", null],
+    ["文档", /\.(pdf|docx?|xlsx?|pptx?|md|txt|csv)$/i],
+    ["网页", /\.html?$/i],
+    ["视频", /\.(mp4|mov|mkv|webm|avi)$/i],
+    ["图片", /\.(png|jpe?g|gif|webp|bmp|svg)$/i],
+    ["音频", /\.(mp3|wav|m4a|flac|aac)$/i],
+    ["文件夹", "dir"],
+  ];
+  var fk = 0;
+  function viewFiles(list) {
+    var kind = FILE_KIND[fk][1];
+    var h = '<div class="r3" style="margin:10px 0"><span class="seg" id="fkind"><span class="lb">类型：</span>' +
+      FILE_KIND.map(function (x, i) {
+        return '<button type="button" data-fk="' + i + '"' + (i === fk ? ' class="on"' : "") + ">" + x[0] + "</button>";
+      }).join("") + "</span></div>";
+    var total = 0;
+    var cards = [];
+    list.forEach(function (s) {
+      var fs2 = (s.f || []).filter(function (f) { return !kind || (kind === "dir" ? f[1] : !f[1] && kind.test(f[0])); });
+      if (!fs2.length) return;
+      total += fs2.length;
+      cards.push({ s: s, fs: fs2 });
+    });
+    if (!total) return h + '<div class="empty">这个范围里没有找到交付文件。只收录三端回复里提到且目前仍存在于硬盘上的文件。</div>';
+    cards.slice(0, listLimit).forEach(function (entry) {
+      var s = entry.s;
+      h += '<div class="card p-' + esc(s.p) + '" data-id="' + esc(s.id) + '">' +
+        '<div class="h"><span class="dt">' + esc(fmtShort(s.a)) + '</span><span class="tt">' + esc(s.t) + "</span>" + chips(s) + "</div>" +
+        fileRows({ f: entry.fs, id: s.id }, 99) +
+        '<div class="acts"><button type="button" class="btn pri" data-conv="' + esc(s.id) + '">看全文</button>' + extraPlatformBtns(s) + '</div>' +
+        '<div class="conv" hidden></div></div>';
+    });
+    if (cards.length > listLimit) {
+      h += '<div class="more"><button type="button" class="btn" data-morelist="1">展开更多（还有 ' + (cards.length - listLimit) + " 场含交付文件）</button></div>";
+    }
+    return h;
+  }
+
+  // ---------- Markdown 全文渲染
+  function md(src) {
+    var lines = src.replace(/\r/g, "").split("\n"), out = [], i = 0;
+    function inl(s) {
+      return s.split(/(`[^`\n]+`)/).map(function (p, j) {
+        if (j % 2) return "<code>" + esc(p.slice(1, -1)) + "</code>";
+        return esc(p)
+          .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
+          .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      }).join("");
+    }
+    function isBlock(l) { return /^\s*(```|#{1,6}\s|[-*+]\s|\d+[.)]\s|>|\|)/.test(l); }
+    while (i < lines.length) {
+      var l = lines[i];
+      if (/^\s*```/.test(l)) {
+        var buf = []; i++;
+        while (i < lines.length && !/^\s*```/.test(lines[i])) buf.push(lines[i++]);
+        i++; out.push("<pre><code>" + esc(buf.join("\n")) + "</code></pre>"); continue;
+      }
+      if (/^\s*\|.*\|\s*$/.test(l)) {
+        var rows = [];
+        while (i < lines.length && /^\s*\|.*\|\s*$/.test(lines[i])) rows.push(lines[i++]);
+        var t = "<table>";
+        rows.forEach(function (r, k) {
+          if (/^\s*\|?\s*:?-{2,}/.test(r)) return;
+          var cells = r.trim().replace(/^\||\|$/g, "").split("|");
+          t += "<tr>" + cells.map(function (c) { return (k === 0 ? "<th>" : "<td>") + inl(c.trim()) + (k === 0 ? "</th>" : "</td>"); }).join("") + "</tr>";
+        });
+        out.push(t + "</table>"); continue;
+      }
+      var hm = l.match(/^\s*(#{1,6})\s+(.*)$/);
+      if (hm) { var lv = Math.min(hm[1].length + 2, 6); out.push("<h" + lv + ">" + inl(hm[2]) + "</h" + lv + ">"); i++; continue; }
+      if (/^\s*([-*+]|\d+[.)])\s+/.test(l)) {
+        var ordered = /^\s*\d/.test(l), items = [];
+        while (i < lines.length && /^\s*([-*+]|\d+[.)])\s+/.test(lines[i])) items.push(lines[i++].replace(/^\s*([-*+]|\d+[.)])\s+/, ""));
+        out.push((ordered ? "<ol>" : "<ul>") + items.map(function (x) { return "<li>" + inl(x) + "</li>"; }).join("") + (ordered ? "</ol>" : "</ul>")); continue;
+      }
+      if (/^\s*>/.test(l)) {
+        var qb = [];
+        while (i < lines.length && /^\s*>/.test(lines[i])) qb.push(lines[i++].replace(/^\s*>\s?/, ""));
+        out.push("<blockquote>" + qb.map(inl).join("<br>") + "</blockquote>"); continue;
+      }
+      if (!l.trim()) { i++; continue; }
+      var para = [l]; i++;
+      while (i < lines.length && lines[i].trim() && !isBlock(lines[i])) para.push(lines[i++]);
+      out.push("<p>" + para.map(inl).join("<br>") + "</p>");
+    }
+    return out.join("");
+  }
+
+  function markTerms(el, terms) {
+    if (!terms.length) return;
+    var re = new RegExp("(" + terms.map(function (q) { return q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); }).join("|") + ")", "gi");
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      if (!re.test(n.nodeValue)) return;
+      re.lastIndex = 0;
+      var span = document.createElement("span");
+      span.innerHTML = esc(n.nodeValue).replace(re, "<mark>$1</mark>");
+      n.parentNode.replaceChild(span, n);
+    });
+  }
+
+  function renderConvBody(box, s, msgs, day, onlyUser) {
+    var filteredMsgs = day ? msgs.filter(function (x) { return dayKey(x[1]) === day; }) : msgs;
+    if (day && !filteredMsgs.length) filteredMsgs = msgs;
+    if (onlyUser) filteredMsgs = filteredMsgs.filter(function (x) { return x[0] === 0; });
+
+    var h = '<div class="conv-bar">' +
+      '<button type="button" class="btn' + (!onlyUser ? " pri" : "") + '" data-convfilter="all">全部消息</button>' +
+      '<button type="button" class="btn' + (onlyUser ? " pri" : "") + '" data-convfilter="user">只看我说</button>' +
+      '<button type="button" class="btn" data-copymd="1">复制全文 Markdown</button>' +
+      '<span class="meta" style="color:var(--text-muted)">共 ' + filteredMsgs.length + " 条</span>" +
+      "</div>";
+    if (!filteredMsgs.length) {
+      h += '<div class="empty" style="margin:16px 0">这个会话暂无可展示的文字记录。</div>';
+    } else {
+      var whoAsst = PLAT_LABEL[s.p] || "AI";
+      filteredMsgs.forEach(function (x) {
+        h += '<div class="msg ' + (x[0] === 0 ? "u" : "a") + '">' +
+          '<div class="who">' + (x[0] === 0 ? "你" : esc(whoAsst)) + '<span class="ts">' + esc(fmtShort(x[1])) + "</span></div>" +
+          '<div class="md">' + (x[0] === 0 ? "<p>" + esc(x[2]).replace(/\n/g, "<br>") + "</p>" : md(x[2])) + "</div></div>";
+      });
+      h += '<div class="more"><button type="button" class="btn" data-conv="' + esc(s.id) + '"' + (day ? ' data-day="' + day + '"' : "") + ' data-bottom="1">收起</button></div>';
+    }
+    box.innerHTML = h;
+    box.dataset.onlyUser = onlyUser ? "1" : "0";
+    box.dataset.day = day || "";
+    var parsed = parseQuery(st.q);
+    if (parsed.flat.length) {
+      markTerms(box, parsed.flat);
+      var first = box.querySelector("mark");
+      if (first) first.scrollIntoView({ block: "center" });
+    }
+  }
+
+  function toggleConv(wrap, day, fromBottom) {
+    var box = wrap.querySelector(".conv"), btn = wrap.querySelector("[data-conv]"), id = wrap.dataset.id;
+    if (!box.hidden) {
+      box.hidden = true; box.innerHTML = "";
+      btn.textContent = day ? "看这天的对话" : "看全文";
+      if (fromBottom) wrap.scrollIntoView({ block: "start" });
+      return;
+    }
+    var s = BY_ID[id];
+    if (!s) return;
+    box.innerHTML = '<div class="empty" style="margin:12px 0">正在加载对话分片……</div>';
+    box.hidden = false;
+    btn.textContent = "收起";
+    getFullMsgs(s, function (msgs) {
+      renderConvBody(box, s, msgs, day, false);
+    });
+  }
+
+  // ---------- 联动更新顶部筛选条与文件夹列表
+  function refreshGroupSelect() {
+    var gsel = document.getElementById("gsel");
+    var visible = baseFiltered(true).filter(function (s) { return st.p === "all" || s.p === st.p; });
+    var cnt = {};
+    visible.forEach(function (s) { cnt[s.g] = (cnt[s.g] || 0) + 1; });
+    var opts = ALL_GROUPS.filter(function (g) {
+      if (!cnt[g.id]) return false;
+      if (st.p !== "all" && g.p !== "all" && g.p !== st.p) return false;
+      return true;
+    });
+    gsel.innerHTML = '<option value="">全部文件夹（' + visible.length + '）</option>' +
+      opts.map(function (g) {
+        return '<option value="' + esc(g.id) + '">' + esc(g.name) + "（" + cnt[g.id] + "）</option>";
+      }).join("");
+    if (st.g && cnt[st.g]) gsel.value = st.g;
+    else { st.g = ""; gsel.value = ""; }
+  }
+
+  function updateControlsUI() {
+    var platPool = S.filter(function (s) { return !(st.hideSched && s.sch) && inRange(s); });
+    var pc = { all: platPool.length, agy: 0, codex: 0, claude: 0 };
+    platPool.forEach(function (s) { pc[s.p] = (pc[s.p] || 0) + 1; });
+    document.querySelectorAll("#plats button").forEach(function (b) {
+      var p = b.dataset.p;
+      b.classList.toggle("on", p === st.p);
+      var lbl = p === "all" ? "全部" : PLAT_LABEL[p];
+      b.textContent = lbl + " (" + (pc[p] || 0) + ")";
+    });
+    document.querySelectorAll("#views button").forEach(function (b) { b.classList.toggle("on", b.dataset.v === st.v); });
+    document.querySelectorAll("#ranges button").forEach(function (b) { b.classList.toggle("on", +b.dataset.r === st.r); });
+    document.getElementById("hide-sched").checked = !!st.hideSched;
+    document.getElementById("q-clear").classList.toggle("show", !!q.value.trim());
+    refreshGroupSelect();
+  }
+
+  var HELP = '<details class="help"><summary>怎么用（点开看）</summary><ul>' +
+    "<li><b>三端统一搜索</b>：同时搜索 Antigravity、Codex 与 Claude 全部会话标题、你的提问、完整回复与交付文件路径；空格表“同时包含”，<code>|</code> 表“任一包含”。输入搜索词时，页面先瞬时出摘要结果，并在后台自动扩展扫描全部分片全文。</li>" +
+    "<li><b>按需看全文</b>：页面首屏仅加载轻量目录，点「看全文」才毫秒级读取对应月度分片，大库也绝不卡顿。</li>" +
+    "<li><b>本地直开联动</b>：当秒搜驾驶舱后台在运行时，交付文件、工作目录和 Obsidian 归档均支持桌面一键直开或定位选中；离线时自动切换为复制路径或协议跳转。</li>" +
+    "<li><b>抗清理永久归档</b>：三端对话每次增量更新都会在本地 <code>data/</code> 留存脱敏文字存档，客户端清理历史后依然可搜可读。</li>" +
+    "</ul></details>";
+
+  function render() {
+    updateControlsUI();
+    var list = baseFiltered(false);
+    var h = "";
+    if (!st.q && st.v === "group" && !st.r && !st.g) h += HELP;
+    if (st.q.trim()) h += viewSearch(list);
+    else if (st.v === "recent") h += viewRecent(list);
+    else if (st.v === "day") h += viewDay(list);
+    else if (st.v === "files") h += viewFiles(list);
+    else h += viewGroup(list);
+    main.innerHTML = h;
+  }
+
+  // ---------- 事件绑定
+  var q = document.getElementById("q"), qt;
+  var gsel = document.getElementById("gsel");
+  gsel.onchange = function () { st.g = gsel.value; listLimit = LIST_PAGE; render(); };
+
+  document.getElementById("plats").onclick = function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    st.p = b.dataset.p; st.g = ""; listLimit = LIST_PAGE; save(); render();
+  };
+  document.getElementById("views").onclick = function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    st.v = b.dataset.v; st.q = ""; q.value = ""; listLimit = LIST_PAGE; save(); render();
+  };
+  document.getElementById("ranges").onclick = function (e) {
+    var b = e.target.closest("button");
+    if (!b) return;
+    st.r = +b.dataset.r; listLimit = LIST_PAGE; save(); render();
+  };
+  document.getElementById("hide-sched").onchange = function (e) {
+    st.hideSched = !!e.target.checked; listLimit = LIST_PAGE; save(); render();
+  };
+  document.getElementById("fs-dn").onclick = function () { setFs(fs - 2); save(); };
+  document.getElementById("fs-up").onclick = function () { setFs(fs + 2); save(); };
+  document.getElementById("theme-btn").onclick = function () { setDark(!dark); save(); };
+  document.getElementById("q-clear").onclick = function () {
+    q.value = ""; st.q = ""; listLimit = LIST_PAGE; render(); q.focus();
+  };
+
+  q.oninput = function () {
+    document.getElementById("q-clear").classList.toggle("show", !!q.value.trim());
+    clearTimeout(qt);
+    qt = setTimeout(function () {
+      st.q = q.value.trim();
+      listLimit = LIST_PAGE;
+      render();
+      window.scrollTo(0, 0);
+    }, 180);
+  };
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== q && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName)) {
+      e.preventDefault(); q.focus(); q.select();
+    } else if (e.key === "Escape" && document.activeElement === q && q.value) {
+      q.value = ""; st.q = ""; render();
+    }
+  });
+
+  main.onclick = function (e) {
+    var cl = e.target.closest(".clamp");
+    if (cl && !e.target.closest("a, button")) { cl.classList.toggle("open"); return; }
+
+    var t = e.target.closest("button, h2");
+    if (!t) return;
+
+    if (t.dataset.morelist) { listLimit += LIST_PAGE; render(); return; }
+    if (t.dataset.moregrp) {
+      var mg = t.dataset.moregrp;
+      groupLimit[mg] = (groupLimit[mg] || GROUP_PAGE) + 40;
+      render(); return;
+    }
+    if (t.dataset.files) {
+      var wrap = t.closest("[data-id]"), box = wrap.querySelector(".fbox");
+      if (box.hidden) { box.innerHTML = fileRows(BY_ID[wrap.dataset.id], 99); box.hidden = false; }
+      else { box.hidden = true; box.innerHTML = ""; }
+      return;
+    }
+    if (t.dataset.morefiles) {
+      var sObj = BY_ID[t.dataset.morefiles];
+      if (sObj) t.closest(".fl").outerHTML = fileRows(sObj, 99);
+      return;
+    }
+    if (t.dataset.copy != null) { copy(t.dataset.copy); return; }
+    if (t.dataset.openpath) {
+      var fp = t.dataset.openpath, isDir = t.dataset.isdir === "1";
+      openViaCockpitOrFallback({ path: fp, mode: "open" }, function () {
+        if (!IS_CLOUD_HOST && !isDir && VIEWABLE.test(fp)) window.open(fileUrl(fp), "_blank");
+        copy(fp, IS_CLOUD_HOST ? "云端模式已复制完整路径（粘贴至电脑资源管理器打开）" : "已复制路径（启动秒搜驾驶舱可一键直开）");
+      });
+      return;
+    }
+    if (t.dataset.reveal) {
+      var rp = t.dataset.reveal;
+      openViaCockpitOrFallback({ path: rp, mode: "reveal" }, function () {
+        copy(rp, "已复制文件路径");
+      });
+      return;
+    }
+    if (t.dataset.obs) {
+      var so = BY_ID[t.dataset.obs];
+      if (!so || !so.obs) return;
+      openViaCockpitOrFallback({ path: "", mode: "obsidian", obsidian_rel: so.obs }, function () {
+        window.location.href = "obsidian://open?vault=" + encodeURIComponent("AI永久记忆") + "&file=" + encodeURIComponent(so.obs);
+      });
+      return;
+    }
+    if (t.dataset.cwd) {
+      var sc = BY_ID[t.dataset.cwd];
+      if (!sc || !sc.cwd) return;
+      openViaCockpitOrFallback({ path: sc.cwd, mode: "open" }, function () {
+        copy(sc.cwd, "已复制工作目录路径");
+      });
+      return;
+    }
+    if (t.dataset.convfilter) {
+      var cbox = t.closest(".conv"), wrapEl = t.closest("[data-id]");
+      var sItem = BY_ID[wrapEl.dataset.id];
+      if (sItem && sItem._msgs) {
+        renderConvBody(cbox, sItem, sItem._msgs, cbox.dataset.day || "", t.dataset.convfilter === "user");
+      }
+      return;
+    }
+    if (t.dataset.copymd) {
+      var wrapMd = t.closest("[data-id]");
+      var sMd = BY_ID[wrapMd.dataset.id];
+      if (sMd && sMd._msgs) {
+        var mdOut = ["# " + sMd.t, ""];
+        sMd._msgs.forEach(function (m) {
+          mdOut.push("### " + (m[0] === 0 ? "你" : PLAT_LABEL[sMd.p]) + " (" + fmtShort(m[1]) + ")", "", m[2], "");
+        });
+        copy(mdOut.join("\n"), "已复制整段 Markdown 对话");
+      }
+      return;
+    }
+    if (t.dataset.conv) { toggleConv(t.closest("[data-id]"), t.dataset.day, !!t.dataset.bottom); return; }
+    if (t.dataset.fk != null) { fk = +t.dataset.fk; render(); return; }
+    if (t.tagName === "H2" && t.parentNode.dataset.g) {
+      var g = t.parentNode.dataset.g;
+      var curFold = t.parentNode.classList.contains("fold");
+      folded[g] = !curFold;
+      t.parentNode.classList.toggle("fold", !curFold);
+      save();
+    }
+  };
+
+  // ---------- 顶部实时统计
+  var bp = C.stats.by_plat || {};
+  var schedCnt = C.stats.scheduled || 0;
+  var humanCnt = Math.max(0, (C.stats.total || 0) - schedCnt);
+  document.getElementById("stat").textContent =
+    (IS_CLOUD_HOST ? "云端同步版 · " : "") +
+    "共 " + C.stats.total + " 个会话（人工 " + humanCnt + " · 定时 " + schedCnt +
+    " · AGY " + (bp.agy || 0) + " / Codex " + (bp.codex || 0) + " / Claude " + (bp.claude || 0) +
+    "）· 更新于 " + fmtShort(C.generated);
+
+  // ---------- Hash 直达参数（#q=...&p=agy|codex|claude&v=group|recent|day|files）
+  location.hash.slice(1).split("&").forEach(function (kv) {
+    if (!kv) return;
+    var i = kv.indexOf("="), k = i >= 0 ? kv.slice(0, i) : kv, v = i >= 0 ? kv.slice(i + 1) : "";
+    try { v = decodeURIComponent(v); } catch (e) {}
+    if (k === "q" && v) { q.value = v; st.q = v.trim(); }
+    if (k === "p" && /^(all|agy|codex|claude)$/.test(v)) st.p = v;
+    if (k === "v" && /^(group|recent|day|files)$/.test(v)) st.v = v;
+  });
+
+  render();
+  if (!IS_CLOUD_HOST) q.focus();
+
+  // ---------- 每 5 分钟自动探测版本更新
+  var upd = document.getElementById("upd");
+  upd.onclick = function () { location.reload(); };
+  function checkUpdate() {
+    var sc = document.createElement("script");
+    sc.src = "data/version.js?t=" + Date.now();
+    sc.onload = sc.onerror = function () {
+      sc.remove();
+      if (window.CATALOG_VERSION > C.generated) {
+        upd.textContent = "目录已更新（" + fmtShort(window.CATALOG_VERSION) + "），点这里刷新看最新内容";
+        upd.hidden = false;
+      }
+    };
+    document.head.appendChild(sc);
+  }
+  setInterval(checkUpdate, 5 * 60 * 1000);
+  } // end startApp
+
+  if (window.UNIFIED_CATALOG) {
+    startApp(window.UNIFIED_CATALOG);
+  } else if (typeof window.UNIFIED_CATALOG_ENC === "string" && window.UNIFIED_CATALOG_ENC.length > 0) {
+    decodeEncPayload(window.UNIFIED_CATALOG_ENC).then(function (obj) {
+      window.UNIFIED_CATALOG = obj;
+      window.UNIFIED_CATALOG_ENC = "";
+      startApp(obj);
+    }).catch(function () {
+      main.innerHTML = '<div class="empty">云端密文解码失败，请强制刷新页面或重新输入密码。</div>';
+    });
+  } else {
+    startApp(null);
+  }
+})();
+</script>
+</body>
+</html>
