@@ -65,8 +65,8 @@ async function sha(s){
 }
 window.addEventListener('DOMContentLoaded',function(){
   document.body.className='';
-  document.body.style.cssText='margin:0;background:#F4F1EA;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px';
-  document.body.innerHTML='<div id="jt_lock_box" style="font:20pt/1.65 Microsoft YaHei,PingFang SC,sans-serif;padding:36px 28px;color:#1B1A17;width:min(680px,100%);background:#FFFDF9;border:2px solid #1D56B8;border-radius:16px;text-align:center;box-shadow:0 10px 28px rgba(0,0,0,.08)"><div style="font-size:24pt;font-weight:800;color:#1B1A17;margin-bottom:10px">金泰三端会话总目录 · 云端同步版</div><div style="font-size:16pt;color:#5F5A4F;margin-bottom:24px">请输入金泰统一访问密码（与《全局秒搜驾驶舱》《中国历史文化图库》通用，验证一次全站免密）</div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:520px;margin:0 auto"><input id="jt_pw_box" type="password" placeholder="请输入访问密码" autocomplete="current-password" style="flex:1;min-width:210px;font:18pt Microsoft YaHei,sans-serif;padding:12px 16px;border:1.5px solid #B4AB97;border-radius:10px;background:#fff;color:#1B1A17"><button id="jt_pw_btn" type="button" style="font:bold 18pt Microsoft YaHei,sans-serif;padding:12px 28px;background:#1D56B8;color:#fff;border:none;border-radius:10px;cursor:pointer">验证进入</button></div><div id="jt_pw_err" style="font-size:15pt;color:#DC2626;min-height:28px;margin-top:12px"></div></div>';
+  document.body.style.cssText='margin:0;background:#0E1525;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px';
+  document.body.innerHTML='<div id="jt_lock_box" style="font:20pt/1.65 Microsoft YaHei,PingFang SC,sans-serif;padding:36px 28px;color:#F2F5FA;width:min(680px,100%);background:#172135;border:2px solid #4B8BF5;border-radius:16px;text-align:center;box-shadow:0 10px 28px rgba(0,0,0,.45)"><div style="font-size:24pt;font-weight:800;color:#F2F5FA;margin-bottom:10px">金泰三端会话总目录 · 云端同步版</div><div style="font-size:16pt;color:#B6C2D4;margin-bottom:24px">请输入金泰统一访问密码（与《全局秒搜驾驶舱》《中国历史文化图库》通用，验证一次全站免密）</div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;max-width:520px;margin:0 auto"><input id="jt_pw_box" type="password" placeholder="请输入访问密码" autocomplete="current-password" style="flex:1;min-width:210px;font:18pt Microsoft YaHei,sans-serif;padding:12px 16px;border:1.5px solid #334361;border-radius:10px;background:#0E1525;color:#F2F5FA"><button id="jt_pw_btn" type="button" style="font:bold 18pt Microsoft YaHei,sans-serif;padding:12px 28px;background:#2563EB;color:#fff;border:none;border-radius:10px;cursor:pointer">验证进入</button></div><div id="jt_pw_err" style="font-size:15pt;color:#FCA5A5;min-height:28px;margin-top:12px"></div></div>';
   document.documentElement.setAttribute('data-jt-ok','1');
   document.documentElement.style.visibility='visible';
   var inp=document.getElementById('jt_pw_box'),btn=document.getElementById('jt_pw_btn'),err=document.getElementById('jt_pw_err');
@@ -126,6 +126,7 @@ window.addEventListener('DOMContentLoaded',function(){
 }
 
 body.dark {
+  color-scheme: dark;
   --bg: #0E1525;
   --surface: #172135;
   --surface-alt: #24314A;
@@ -596,7 +597,7 @@ mark {
 }
 </style>
 </head>
-<body>
+<body class="dark">
 <div class="top">
   <div class="top-in">
     <div id="upd" hidden title="点一下重新载入页面"></div>
@@ -608,7 +609,7 @@ mark {
         <a class="tbtn" id="cockpit-link" href="http://127.0.0.1:18899/" target="_blank" rel="noopener" title="打开全机文件与图库毫秒秒搜驾驶舱">全局秒搜驾驶舱</a>
         <button class="tbtn" id="fs-dn" type="button" title="缩小字号">字号小</button>
         <button class="tbtn" id="fs-up" type="button" title="放大字号">字号大</button>
-        <button class="tbtn" id="theme-btn" type="button" title="切换浅色/深色护眼模式">深色护眼</button>
+        <button class="tbtn" id="theme-btn" type="button" title="切换浅色/深色护眼模式">浅色高对比</button>
       </span>
     </div>
     <div class="r2">
@@ -818,7 +819,7 @@ mark {
 
   // ---------- 持久化状态
   var fs = 20;
-  var dark = false;
+  var dark = true;
   var st = { p: "all", v: "group", r: 0, g: "", q: "", hideSched: true };
   var folded = {};
   var groupLimit = {};
@@ -836,7 +837,7 @@ mark {
   function save() {
     try {
       localStorage.setItem("ccd-catalog-v2", JSON.stringify({
-        p: st.p, v: st.v, r: st.r, fs: fs, dark: dark, hideSched: st.hideSched
+        p: st.p, v: st.v, r: st.r, fs: fs, dark: dark, darkV2: dark, hideSched: st.hideSched
       }));
       localStorage.setItem("ccd-catalog-fold-v2", JSON.stringify(folded));
     } catch (e) {}
@@ -847,7 +848,7 @@ mark {
     if (sv.v) st.v = sv.v;
     if (sv.r != null) st.r = sv.r;
     if (sv.fs) setFs(sv.fs);
-    if (sv.dark) setDark(sv.dark);
+    setDark(sv.darkV2 !== undefined ? !!sv.darkV2 : true);
     if (sv.hideSched != null) st.hideSched = !!sv.hideSched;
   } catch (e) {}
   try { folded = JSON.parse(localStorage.getItem("ccd-catalog-fold-v2") || "{}"); } catch (e) {}
